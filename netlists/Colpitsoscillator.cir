@@ -1,0 +1,22 @@
+* C:\Users\user\Downloads\Telegram Desktop\Colpitsoscillator.sch
+
+* Schematics Version 9.2
+* Sun Sep 27 00:56:44 2026
+
+
+
+** Analysis setup **
+.tran 1n 1m 0 1n
+.OP 
+
+
+* From [PSPICE NETLIST] section of d:\PSpice\PSpice.ini:
+.lib "nom.lib"
+
+.INC "Colpitsoscillator.net"
+
+
+.PROBE V(*) I(*) W(*) D(*) NOISE(*) 
+
+
+.END

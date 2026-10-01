@@ -1,0 +1,48 @@
+* ============================================================
+* FILE    : gilbert_cell_optimized.cir
+* CIRCUIT : Gilbert Cell — With Current Bleeding (Chung 2020)
+* PROJECT : BFO Metal Detector — Electronics II, BUET EEE
+* PAPER   : Chung & Iliadis, "Modeling a High Linearity, Low
+*           Noise Gilbert Cell Mixer using Three Optimization
+*           Techniques," IEEE 2020
+* APPLIED : Current bleeding (Rbl1/Rbl2) — reduces LO stage
+*           noise; Emitter degeneration RE=1k — linearises ±1V
+*           input range; Proper −2V DC bias for lower pair.
+* NOT APPLIED: Inductive resonance (negligible at kHz range)
+* ============================================================
+VPOS   VCC   0   DC  12V
+VNEG   VEE   0   DC -12V
+V_REF   SRC1  0   SIN(0  1  712kHz)
+V_SRCH  SRC2  0   SIN(0  1  750kHz)
+C_IN1   SRC1  V1P   100n
+C_IN2   SRC2  V2P   100n
+RB1   V1P   0     100k
+RB2   V1N   0     100k
+RB3a  0     V2P   10k
+RB3b  V2P   VEE   50k
+RB4a  0     V2N   10k
+RB4b  V2N   VEE   50k
+
+Q1   OUTM   V1P   MIDL   Q2N2222
+Q2   OUTP   V1N   MIDL   Q2N2222
+Q3   OUTM   V1N   MIDR   Q2N2222
+Q4   OUTP   V1P   MIDR   Q2N2222
+RL1   VCC   OUTM   2.2k
+RL2   VCC   OUTP   2.2k
+
+* Current bleeding resistors (from VCC to MIDL and MIDR)
+Rbl1   VCC   MIDL   22k
+Rbl2   VCC   MIDR   22k
+
+Q5   MIDL   V2P   EMT5   Q2N2222
+Q6   MIDR   V2N   EMT6   Q2N2222
+RE1   EMT5   TAIL   1k
+RE2   EMT6   TAIL   1k
+IEE   TAIL   VEE   DC  1mA
+C_OUT    OUTP   MIX_OUT   100n
+R_LOAD   MIX_OUT   0      100k
+
+.TRAN  5ns  300us  50us  UIC
+.PROBE V(OUTP) V(OUTM) V(MIX_OUT) V(MIDL) V(MIDR) V(V1P) V(V2P)
+.LIB "nom.lib"
+.END

@@ -1,0 +1,22 @@
+* C:\Users\user\Downloads\Telegram Desktop\low_pass_filter.sch
+
+* Schematics Version 9.2
+* Sun Sep 27 01:19:35 2026
+
+
+
+** Analysis setup **
+.tran 1u 10m 0 10u
+.OP 
+
+
+* From [PSPICE NETLIST] section of d:\PSpice\PSpice.ini:
+.lib "nom.lib"
+
+.INC "low_pass_filter.net"
+
+
+.PROBE V(*) I(*) W(*) D(*) NOISE(*) 
+
+
+.END

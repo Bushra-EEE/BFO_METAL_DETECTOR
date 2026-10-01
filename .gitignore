@@ -1,0 +1,62 @@
+# BFO Metal Detector — PSpice / OrCAD project
+# Keep project source files, documentation, and simulation images.
+# Ignore generated, temporary, backup, and machine-specific files.
+
+# ---------- OrCAD / PSpice temporary and backup files ----------
+*.bak
+*.lck
+*.dbk
+*.DRC
+*.ERC
+*.opj.bak
+*.dsn.bak
+*.mnl
+
+# ---------- Generated PSpice simulation files ----------
+*.dat
+*.out
+*.prb
+*.sim
+*.pxi
+*.stl
+*.mdf
+*.err
+*.log
+*.csd
+*.net.bak
+probe.ini
+pspice.ini
+
+# Generated netlists from Capture/PSpice.
+# Hand-written .cir files in netlists/ remain tracked.
+*.net
+!netlists/*.net
+
+# ---------- OrCAD library/cache files ----------
+*.clg
+*.dbcache
+
+# ---------- Operating-system files ----------
+Thumbs.db
+desktop.ini
+.DS_Store
+.AppleDouble
+.LSOverride
+$RECYCLE.BIN/
+
+# ---------- Editor / IDE temporary files ----------
+*.swp
+*.swo
+*~
+.vscode/
+*.sublime-workspace
+
+# ---------- Local repository archives ----------
+*.zip
+
+# ---------- Project source files to keep tracked ----------
+!*.sch
+!*.cir
+!*.lib
+!*.olb
+!*.asc

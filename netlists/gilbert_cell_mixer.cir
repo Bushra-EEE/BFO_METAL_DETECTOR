@@ -1,0 +1,51 @@
+* ============================================================
+* FILE    : gilbert_cell_mixer.cir
+* CIRCUIT : Gilbert Cell 4-Quadrant Analog Multiplier (Baseline)
+* PROJECT : BFO Metal Detector — Electronics II, BUET EEE
+* INPUT 1 : V_REF  = 712 kHz, 1 Vpk (Reference Oscillator)
+* INPUT 2 : V_SRCH = 750 kHz, 1 Vpk (Search Oscillator)
+* OUTPUT  : MIX_OUT → beat (38 kHz) + sum (1462 kHz)
+* ============================================================
+* NODE MAP:
+*   VCC   = +12 V   VEE = -12 V   GND = 0 V
+*   SRC1  = 712 kHz raw input     SRC2 = 750 kHz raw input
+*   V1P   = Q1+Q4 base (V1+)      V1N  = Q2+Q3 base (V1-)
+*   V2P   = Q5 base               V2N  = Q6 base
+*   OUTM  = Q1+Q3 collectors      OUTP = Q2+Q4 collectors
+*   MIDL  = Q1+Q2 emitters = Q5 collector
+*   MIDR  = Q3+Q4 emitters = Q6 collector
+*   EMT5  = Q5 emitter → RE1 → TAIL
+*   EMT6  = Q6 emitter → RE2 → TAIL
+*   TAIL  = IEE sink → VEE
+*   MIX_OUT = final output after coupling cap
+* ============================================================
+
+VPOS   VCC   0   DC  12V
+VNEG   VEE   0   DC -12V
+V_REF   SRC1  0   SIN(0  1  712kHz)
+V_SRCH  SRC2  0   SIN(0  1  750kHz)
+C_IN1   SRC1  V1P   100n
+C_IN2   SRC2  V2P   100n
+RB1   V1P   0    100k
+RB2   V1N   0    100k
+RB3   V2P   0    100k
+RB4   V2N   0    100k
+
+Q1   OUTM   V1P   MIDL   Q2N2222
+Q2   OUTP   V1N   MIDL   Q2N2222
+Q3   OUTM   V1N   MIDR   Q2N2222
+Q4   OUTP   V1P   MIDR   Q2N2222
+RL1   VCC   OUTM   2.2k
+RL2   VCC   OUTP   2.2k
+Q5   MIDL   V2P   EMT5   Q2N2222
+Q6   MIDR   V2N   EMT6   Q2N2222
+RE1   EMT5   TAIL   470
+RE2   EMT6   TAIL   470
+IEE   TAIL   VEE   DC  2mA
+C_OUT    OUTP   MIX_OUT   100n
+R_LOAD   MIX_OUT   0      100k
+
+.TRAN  5ns  300us  50us  UIC
+.PROBE V(OUTP) V(OUTM) V(MIX_OUT) V(MIDL) V(MIDR) V(V1P) V(V2P)
+.LIB "nom.lib"
+.END

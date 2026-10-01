@@ -1,0 +1,22 @@
+* C:\Users\user\Downloads\Telegram Desktop\complete_bfo_circuit.sch
+
+* Schematics Version 9.2
+* Fri Oct 02 02:34:22 2026
+
+
+
+** Analysis setup **
+.tran 1u 5m 500u 10u SKIPBP
+.OP 
+
+
+* From [PSPICE NETLIST] section of d:\PSpice\PSpice.ini:
+.lib "nom.lib"
+
+.INC "complete_bfo_circuit.net"
+
+
+.PROBE V(*) I(*) W(*) D(*) NOISE(*) 
+
+
+.END
